@@ -1,0 +1,58 @@
+<!--
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at https://mozilla.org/MPL/2.0/.
+-->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>A quieter web</title>
+  <style>
+    body {
+      max-width: 42rem;
+      margin: 3rem auto;
+      padding: 0 1.5rem;
+      background: #f6f4ee;
+      color: #14171c;
+      font: 19px/1.6 system-ui;
+    }
+
+    h1 {
+      font-size: 2.3rem;
+      line-height: 1.05;
+    }
+
+    .tracker {
+      width: 1px;
+      height: 1px;
+      opacity: 0;
+    }
+  </style>
+</head>
+<body>
+  <article>
+    <h1>A quieter web</h1>
+    <p class="byline">Context verification article</p>
+    <p>
+      Reader mode keeps the article and removes the surrounding page chrome.
+      It uses system type so text follows the reader's accessibility settings.
+    </p>
+    <p>
+      The protection counter below is driven by resource elements that match
+      the same domain-anchored rules shipped in the WebKit blocker.
+    </p>
+    <p>
+      Turning protection off for this site persists only the normalized host
+      on this device, reloads the page, and sends no preference anywhere.
+    </p>
+  </article>
+  <img class="tracker" src="https://doubleclick.net/pixel.gif" alt="">
+  <img class="tracker" src="https://googlesyndication.com/pixel.gif" alt="">
+  <img class="tracker" src="https://google-analytics.com/pixel.gif" alt="">
+  <img class="tracker" src="https://connect.facebook.net/pixel.gif" alt="">
+  <img class="tracker" src="https://scorecardresearch.com/pixel.gif" alt="">
+  <img class="tracker" src="https://taboola.com/pixel.gif" alt="">
+</body>
+</html>

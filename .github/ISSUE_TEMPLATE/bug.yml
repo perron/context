@@ -1,0 +1,30 @@
+name: Bug
+description: Report a reproducible problem
+body:
+  - type: markdown
+    attributes:
+      value: Do not report security issues here. Use SECURITY.md.
+  - type: input
+    id: build
+    attributes:
+      label: Context build
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+    validations:
+      required: true

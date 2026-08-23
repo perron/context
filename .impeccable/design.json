@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-23T19:14:00Z",
+  "title": "Design System: Context",
+  "extensions": {
+    "colorMeta": {
+      "atlas-night": { "role": "neutral", "displayName": "Atlas Night", "canonical": "#060A0F", "tonalRamp": ["#05080C", "#0A111A", "#152232", "#2C3A4B", "#536171", "#84909C", "#BEC5CB", "#EEF1F3"] },
+      "atlas-raised": { "role": "neutral", "displayName": "Atlas Raised", "canonical": "#11161E", "tonalRamp": ["#080B0F", "#11161E", "#242C38", "#3C4653", "#606A77", "#8D96A0", "#C3C8CE", "#F0F2F4"] },
+      "browser-surface": { "role": "neutral", "displayName": "Browser Surface", "canonical": "#20242A", "tonalRamp": ["#0C0E11", "#20242A", "#343A42", "#4B535C", "#6B737C", "#939AA2", "#C6CACF", "#F1F2F3"] },
+      "warm-white": { "role": "neutral", "displayName": "Warm White", "canonical": "#F6F4EE", "tonalRamp": ["#25231E", "#454139", "#686258", "#8D867A", "#B1ABA0", "#D2CEC5", "#EAE7E0", "#F6F4EE"] },
+      "signal-blue": { "role": "primary", "displayName": "Signal Blue", "canonical": "#70B3F0", "tonalRamp": ["#092844", "#123F66", "#1F5A8A", "#3377AD", "#5095CF", "#70B3F0", "#ACD4F8", "#E8F5FF"] }
+    },
+    "typographyMeta": {
+      "title": { "displayName": "Native Title", "purpose": "Product identity and sheet titles." },
+      "body": { "displayName": "Native Body", "purpose": "Readable explanations and metadata." },
+      "label": { "displayName": "Native Label", "purpose": "Compact action and state language." }
+    },
+    "shadows": [
+      { "name": "browser-island", "value": "0 8px 18px rgba(0,0,0,0.22)", "purpose": "One ambient lift under the floating browser controls." }
+    ],
+    "motion": [],
+    "breakpoints": [
+      { "name": "compact", "value": "650px" },
+      { "name": "regular-ios", "value": "SwiftUI horizontalSizeClass.regular" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Handoff",
+      "kind": "button",
+      "refersTo": "action-primary",
+      "description": "The first-class user-controlled Grok Bot handoff.",
+      "html": "<button class=\"ds-handoff\">Ask your Grok Bot <span aria-hidden=\"true\">↗</span></button>",
+      "css": ".ds-handoff{display:flex;justify-content:space-between;align-items:center;width:100%;padding:18px;border:0;border-radius:18px;background:#70B3F0;color:#F6F4EE;font:700 17px -apple-system,BlinkMacSystemFont,sans-serif}.ds-handoff:hover{background:#83C4FF}.ds-handoff:focus-visible{outline:3px solid #F6F4EE;outline-offset:3px}.ds-handoff:active{transform:scale(.99)}"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "description": "A quiet alternative action on a tonal surface.",
+      "html": "<button class=\"ds-secondary\">Read the privacy policy</button>",
+      "css": ".ds-secondary{padding:11px 19px;border:1px solid rgba(255,255,255,.12);border-radius:15px;background:rgba(255,255,255,.06);color:#F6F4EE;font:650 16px -apple-system,BlinkMacSystemFont,sans-serif}.ds-secondary:hover{background:rgba(255,255,255,.10)}.ds-secondary:focus-visible{outline:3px solid #70B3F0;outline-offset:3px}.ds-secondary:active{background:rgba(255,255,255,.14)}"
+    },
+    {
+      "name": "Search Field",
+      "kind": "input",
+      "description": "The tonal address and search field inside the browser island.",
+      "html": "<label class=\"ds-search\"><span aria-hidden=\"true\">⌕</span><input placeholder=\"Search or enter website\"></label>",
+      "css": ".ds-search{display:flex;gap:10px;align-items:center;padding:12px 14px;border:1px solid rgba(255,255,255,.1);border-radius:999px;background:#20242A;color:#A9B3C0;font:17px -apple-system,BlinkMacSystemFont,sans-serif}.ds-search input{min-width:0;flex:1;border:0;outline:0;background:transparent;color:#F6F4EE;font:inherit}.ds-search:focus-within{border-color:#70B3F0}"
+    },
+    {
+      "name": "Protection Chip",
+      "kind": "chip",
+      "description": "Compact, literal content-protection state.",
+      "html": "<span class=\"ds-chip\">◈&nbsp; Protection on</span>",
+      "css": ".ds-chip{display:inline-flex;align-items:center;padding:9px 13px;border:1px solid rgba(255,255,255,.1);border-radius:999px;background:rgba(255,255,255,.09);color:#F6F4EE;font:650 13px -apple-system,BlinkMacSystemFont,sans-serif}"
+    },
+    {
+      "name": "Night Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "A quiet container over the Night Atlas field.",
+      "html": "<article class=\"ds-card\"><strong>Private by default</strong><p>Browsing data stays on this device.</p></article>",
+      "css": ".ds-card{padding:16px;border:1px solid rgba(255,255,255,.1);border-radius:16px;background:#20242A;color:#F6F4EE;font:17px -apple-system,BlinkMacSystemFont,sans-serif}.ds-card strong{font-weight:650}.ds-card p{margin:4px 0 0;color:#A9B3C0;font-size:14px;line-height:1.4}"
+    },
+    {
+      "name": "Browser Navigation",
+      "kind": "nav",
+      "description": "The floating island grouping browser state and primary destinations.",
+      "html": "<nav class=\"ds-nav\"><span>Search or enter website</span><button>1</button><button class=\"ds-signal\">✦</button><button>•••</button></nav>",
+      "css": ".ds-nav{display:flex;align-items:center;gap:9px;padding:10px;border:1px solid rgba(255,255,255,.12);border-radius:28px;background:#20242A;color:#A9B3C0;font:16px -apple-system,BlinkMacSystemFont,sans-serif;box-shadow:0 8px 18px rgba(0,0,0,.22)}.ds-nav span{flex:1}.ds-nav button{width:42px;height:42px;border:0;border-radius:999px;background:#11161E;color:#F6F4EE}.ds-nav button:focus-visible{outline:3px solid #70B3F0;outline-offset:2px}.ds-nav .ds-signal{background:#70B3F0;color:white}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Night Atlas",
+    "overview": "Context feels like a quiet observatory built from native Apple controls: an abyssal field, sparse stars, warm white information, and one cool signal color. Density stays calm on iPhone and opens up on iPad. Identity comes from the Context mark, the blue page-handoff action, and the recurring floating browser island.",
+    "keyCharacteristics": ["Deep navy field with sparse, deterministic stars.", "Warm-white content and one sky-blue action color.", "Native SwiftUI materials, symbols, Dynamic Type, and device adaptation.", "Rounded cards and capsules with quiet one-pixel boundaries.", "Explicit state language."],
+    "rules": [
+      { "name": "The One Signal Rule", "body": "Signal Blue identifies actions the user intentionally initiates; it does not decorate passive content.", "section": "colors" },
+      { "name": "The Quiet Night Rule", "body": "Stars remain sparse and low contrast.", "section": "colors" },
+      { "name": "The Native Scale Rule", "body": "App text uses semantic Dynamic Type roles and must remain useful when the user enlarges text.", "section": "typography" },
+      { "name": "The Native Layer Rule", "body": "Use system material when a control floats above web content; use opaque night surfaces when stable contrast matters more than translucency.", "section": "elevation" }
+    ],
+    "dos": ["Do lead AI-related browsing surfaces with the Context mark and the Signal Blue handoff action.", "Do use native iOS symbols, sheets, menus, labels, and Dynamic Type behavior.", "Do name persistent content truthfully.", "Do keep outbound page context reviewable before it leaves the device."],
+    "donts": ["Don't copy Comet branding, illustrations, or screen composition.", "Don't add extra accent colors, glossy high-chroma gradients, or dense star effects.", "Don't imply that opening Grok Bot automatically sends content or selects a named teammate.", "Don't present planned features as available."]
+  }
+}

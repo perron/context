@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1024" height="1024" viewBox="0 0 1024 1024" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="night" x1="120" y1="96" x2="904" y2="928" gradientUnits="userSpaceOnUse"><stop stop-color="#101D31"/><stop offset="1" stop-color="#05090F"/></linearGradient>
+    <linearGradient id="signal" x1="640" y1="368" x2="824" y2="656" gradientUnits="userSpaceOnUse"><stop stop-color="#83C4FF"/><stop offset="1" stop-color="#4F8FD1"/></linearGradient>
+  </defs>
+  <rect width="1024" height="1024" fill="url(#night)"/>
+  <circle cx="210" cy="230" r="7" fill="#F7F3EA" fill-opacity=".62"/><circle cx="820" cy="194" r="5" fill="#F7F3EA" fill-opacity=".48"/><circle cx="170" cy="760" r="4" fill="#F7F3EA" fill-opacity=".42"/><circle cx="842" cy="814" r="7" fill="#F7F3EA" fill-opacity=".58"/>
+  <path d="M724 286C666 238 591 212 512 212C346 212 212 346 212 512C212 678 346 812 512 812C591 812 666 786 724 738" stroke="#F7F3EA" stroke-width="92" stroke-linecap="round"/>
+  <rect x="632" y="392" width="218" height="240" rx="52" fill="url(#signal)"/>
+  <path d="M686 466H796M686 520H770M686 574H742" stroke="#F7F3EA" stroke-width="28" stroke-linecap="round"/>
+</svg>

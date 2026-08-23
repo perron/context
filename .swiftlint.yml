@@ -1,0 +1,26 @@
+# This Source Code Form is subject to the terms of the Mozilla Public
+# License, v. 2.0. If a copy of the MPL was not distributed with this
+# file, You can obtain one at https://mozilla.org/MPL/2.0/.
+
+strict: true
+included:
+  - app
+  - packages/BrowserKit
+  - packages/SearchKit
+excluded:
+  - packages/BrowserKit/.build
+  - packages/BrowserKit/.swiftpm
+  - packages/SearchKit/.build
+  - packages/SearchKit/.swiftpm
+  - DerivedData
+line_length:
+  warning: 120
+  error: 140
+identifier_name:
+  min_length:
+    warning: 2
+type_body_length:
+  warning: 300
+file_length:
+  warning: 500
+reporter: xcode
