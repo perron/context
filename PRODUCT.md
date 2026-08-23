@@ -23,7 +23,7 @@ Context is Grok-first because the page handoff is a primary browser action, not 
 - Native SwiftUI and WebKit on iPhone and iPad.
 - The live working copy stays outside iCloud Drive during development.
 - Karl builds with Xcode and Cursor Ultra with Grok 4.6.
-- The app will be published from Karl Perron's personal Apple Developer membership and sold as a one-time $6.99 purchase.
+- The app will be published by Topcloud LLC through its Apple Developer organization membership and sold as a one-time $6.99 purchase.
 - The repository will be public under MPL-2.0.
 
 ## Capabilities and Constraints

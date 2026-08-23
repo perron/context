@@ -18,6 +18,7 @@ struct BrowserRootView: View {
     @ObservedObject var browser: BrowserStore
     @StateObject private var library = BrowserLibraryStore()
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
+    @AppStorage("isIPadSidebarVisible") private var isIPadSidebarVisible = true
     @State private var addressInput = ""
     @State private var isShowingTabs = false
     @State private var isShowingSettings = false
@@ -31,16 +32,35 @@ struct BrowserRootView: View {
         Group {
             if horizontalSizeClass == .regular {
                 HStack(spacing: 0) {
-                    BrowserSidebar(
-                        browser: browser,
-                        showAssistant: { isShowingAssistant = true },
-                        showLibrary: { isShowingLibrary = true },
-                        showSettings: { isShowingSettings = true }
-                    )
-                    .frame(width: 260)
+                    if isIPadSidebarVisible {
+                        BrowserSidebar(
+                            browser: browser,
+                            hideSidebar: { isIPadSidebarVisible = false },
+                            showAssistant: { isShowingAssistant = true },
+                            showLibrary: { isShowingLibrary = true },
+                            showSettings: { isShowingSettings = true }
+                        )
+                        .frame(width: 260)
 
-                    Divider()
-                    browserCanvas
+                        Divider()
+                    }
+
+                    ZStack(alignment: .topLeading) {
+                        browserCanvas
+
+                        if !isIPadSidebarVisible {
+                            Button {
+                                isIPadSidebarVisible = true
+                            } label: {
+                                Label("Show tabs", systemImage: "sidebar.left")
+                            }
+                            .buttonStyle(.bordered)
+                            .controlSize(.large)
+                            .background(.regularMaterial, in: Capsule())
+                            .accessibilityIdentifier("showTabsSidebarButton")
+                            .padding(12)
+                        }
+                    }
                 }
             } else {
                 browserCanvas
@@ -90,6 +110,7 @@ struct BrowserRootView: View {
             browser.externalURLHandler = { url in
                 UIApplication.shared.open(url)
             }
+            configureUITestStateIfRequested()
             loadUITestFixtureIfRequested()
         }
         .task {
@@ -211,6 +232,14 @@ struct BrowserRootView: View {
         }
         didLoadUITestFixture = true
         browser.navigate(to: fixtureURL)
+        #endif
+    }
+
+    private func configureUITestStateIfRequested() {
+        #if DEBUG
+        if ProcessInfo.processInfo.arguments.contains("--ui-test-sidebar-expanded") {
+            isIPadSidebarVisible = true
+        }
         #endif
     }
 

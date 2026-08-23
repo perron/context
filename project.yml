@@ -52,7 +52,6 @@ targets:
         SUPPORTS_MACCATALYST: NO
         TARGETED_DEVICE_FAMILY: "1,2"
         CODE_SIGN_STYLE: Automatic
-        DEVELOPMENT_TEAM: Q6W78X6647
         DEVELOPMENT_ASSET_PATHS: ""
     scheme:
       gatherCoverageData: true

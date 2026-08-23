@@ -1,11 +1,11 @@
 # Context
 
-Open-source, Grok-first browser for iPhone and iPad. Version 1 is a focused, native WebKit browser with tabs, content protection, reader extraction, and an explicit page handoff to Grok or Grok Bot. Planned App Store price: $6.99 one-time purchase. Publisher: Karl Perron through his personal Apple Developer membership. MPL-2.0, public repo.
+Open-source, Grok-first browser for iPhone and iPad. Version 1 is a focused, native WebKit browser with tabs, content protection, reader extraction, and an explicit page handoff to Grok or Grok Bot. Planned App Store price: $6.99 one-time purchase. Publisher: Topcloud LLC through its Apple Developer organization membership. MPL-2.0, public repo.
 
-## Project facts (shared section: keep identical in CLAUDE.md)
+## Project facts (shared section: keep identical in AGENTS.md and CLAUDE.md)
 
-- Owner and publisher: Karl Perron. He reviews behavior and needs beginner-readable instructions.
-- `PRODUCT.md` and `docs/adr/0001-personal-paid-grok-first-launch.md` override older roadmap documents when they conflict.
+- Owner: Karl Perron. Publisher: Topcloud LLC. Karl reviews behavior and needs beginner-readable instructions.
+- `PRODUCT.md` and the accepted ADRs override older roadmap documents when they conflict.
 - Stack: Swift 6, SwiftUI, iOS 26 floor, and WebKit. Alternate browser engines are out of scope.
 - Grok and Grok Bot remain third-party services. Never claim an account, chat, named-bot, or send integration that has not been verified against a public contract.
 - Non-negotiables: no autonomous web actions in version 1; content leaves the device only on explicit user action; no passwords, payments, or CAPTCHA near AI features; only bundled JavaScript runs; no GPL dependencies; secrets never enter the public repository; MPL header on every source file.

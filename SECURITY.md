@@ -2,7 +2,7 @@
 
 ## Report a vulnerability
 
-Email perron@mac.com. Do not open a public issue for a suspected
+Email karl@topcloud.com. Do not open a public issue for a suspected
 vulnerability.
 
 Include the affected version, reproduction steps, impact, and any suggested

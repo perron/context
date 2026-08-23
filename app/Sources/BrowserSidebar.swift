@@ -7,6 +7,7 @@ import SwiftUI
 
 struct BrowserSidebar: View {
     @ObservedObject var browser: BrowserStore
+    let hideSidebar: () -> Void
     let showAssistant: () -> Void
     let showLibrary: () -> Void
     let showSettings: () -> Void
@@ -17,6 +18,12 @@ struct BrowserSidebar: View {
                 Text("Tabs")
                     .font(.title2.weight(.bold))
                 Spacer()
+                Button(action: hideSidebar) {
+                    Label("Hide tabs", systemImage: "sidebar.left")
+                        .labelStyle(.iconOnly)
+                }
+                .accessibilityLabel("Hide tabs")
+                .accessibilityIdentifier("hideTabsSidebarButton")
                 Button {
                     browser.addTab()
                 } label: {

@@ -3,6 +3,7 @@
 // file, You can obtain one at https://mozilla.org/MPL/2.0/.
 
 import XCTest
+import UIKit
 
 final class ContextUITests: XCTestCase {
     override func setUpWithError() throws {
@@ -81,6 +82,33 @@ final class ContextUITests: XCTestCase {
         XCTAssertTrue(app.staticTexts["A quieter web"].exists)
         addScreenshot(named: "Context 1.0 Reader")
         app.buttons["Done"].tap()
+    }
+
+    @MainActor
+    func testIPadSidebarCanHideAndShow() throws {
+        guard UIDevice.current.userInterfaceIdiom == .pad else {
+            throw XCTSkip("The persistent tab sidebar is an iPad layout.")
+        }
+
+        let app = XCUIApplication()
+        app.launchArguments = [
+            "-AppleLanguages", "(en)",
+            "-AppleLocale", "en_US",
+            "--ui-test-sidebar-expanded"
+        ]
+        app.launch()
+
+        let hideButton = app.buttons["hideTabsSidebarButton"]
+        XCTAssertTrue(hideButton.waitForExistence(timeout: 5))
+        hideButton.tap()
+
+        let showButton = app.buttons["showTabsSidebarButton"]
+        XCTAssertTrue(showButton.waitForExistence(timeout: 5))
+        addScreenshot(named: "Context 1.0 iPad Sidebar Collapsed")
+        showButton.tap()
+
+        XCTAssertTrue(hideButton.waitForExistence(timeout: 5))
+        addScreenshot(named: "Context 1.0 iPad Sidebar Expanded")
     }
 
     private func addScreenshot(named name: String) {

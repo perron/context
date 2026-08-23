@@ -1,6 +1,6 @@
 # ADR 0001: Personal paid Grok-first launch
 
-**Status:** Accepted on August 23, 2026
+**Status:** Superseded by ADR 0002 on August 23, 2026
 
 ## Decision
 

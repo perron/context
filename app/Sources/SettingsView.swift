@@ -51,7 +51,7 @@ struct SettingsView: View {
                         VStack(alignment: .leading) {
                             Text("Context")
                                 .font(.headline)
-                            Text("By Karl Perron")
+                            Text("By Topcloud LLC")
                                 .font(.caption)
                                 .foregroundStyle(.secondary)
                         }

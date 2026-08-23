@@ -13,7 +13,7 @@ events where a person represents Context.
 
 ## Reporting
 
-Report conduct concerns privately to perron@mac.com. The maintainers
+Report conduct concerns privately to karl@topcloud.com. The maintainers
 will review reports promptly, protect reporter privacy where possible, and
 take proportionate action.
 
