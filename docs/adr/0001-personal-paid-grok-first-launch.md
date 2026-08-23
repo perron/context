@@ -6,7 +6,7 @@
 
 Ship the first App Store version from Karl Perron's individual Apple Developer membership as a $6.99 one-time purchase. Version 1.0 is a complete browser with a Grok-first home screen, not the full agent-and-harness roadmap described in the original product documents.
 
-Grok opens at grok.com in a normal Context tab. Context does not scrape a Grok session, store a Grok credential, bundle xAI API usage, or claim an OAuth integration that is not implemented. Bookmarks and browsing history stay on the device. Page handoff can copy, share, and open Grok Bot. Current Grok Bot deep links do not route directly to a named teammate, so Context states that limit in the interface.
+Grok opens at grok.com in a normal Context tab. Context does not scrape a Grok session, store a Grok or X credential, bundle xAI API usage, or claim an OAuth integration that is not implemented. Bookmarks and browsing history stay on the device. Ask Grok can share through iOS, copy the prepared prompt, open Grok or Grok Bot, and open X's reviewable Web Intent. Current Grok Bot links do not accept supplied page context, so Context states that limit in the interface.
 
 The source repository is public under MPL-2.0. The app's privacy policy and support page are published from the same repository.
 

@@ -13,7 +13,7 @@ struct NewTabPage: View {
 
     private let sites = [
         TopSite(name: "Grok", monogram: "G", url: ContextLinks.grok),
-        TopSite(name: "X", monogram: "X", url: URL(string: "https://x.com")!),
+        TopSite(name: "X", monogram: "X", url: ContextLinks.xHome),
         TopSite(name: "GitHub", monogram: "Gh", url: URL(string: "https://github.com")!),
         TopSite(name: "Wikipedia", monogram: "W", url: URL(string: "https://wikipedia.org")!)
     ]
@@ -38,7 +38,7 @@ struct NewTabPage: View {
                             }
                         }
 
-                        Text("Your page. Your Grok Bot.")
+                        Text("Your page. Ready for Grok.")
                             .font(.subheadline)
                             .foregroundStyle(.white.opacity(0.66))
                     }
@@ -49,9 +49,9 @@ struct NewTabPage: View {
                                 .font(.title2)
 
                             VStack(alignment: .leading, spacing: 4) {
-                                Text("Ask your Grok Bot")
+                                Text("Ask Grok")
                                     .font(.headline)
-                                Text("Prepare this page for your assigned teammate")
+                                Text("Review and share useful page context")
                                     .font(.subheadline)
                                     .foregroundStyle(.white.opacity(0.70))
                             }
@@ -68,7 +68,7 @@ struct NewTabPage: View {
                         )
                     }
                     .buttonStyle(.plain)
-                    .accessibilityLabel("Ask your Grok Bot")
+                    .accessibilityLabel("Ask Grok")
 
                     sectionLabel("Quick Links")
                     LazyVGrid(

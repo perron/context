@@ -7,7 +7,6 @@ import SwiftUI
 
 struct SettingsView: View {
     @Environment(\.dismiss) private var dismiss
-    @AppStorage("grokBotTeammateName") private var teammateName = "Context"
 
     var body: some View {
         NavigationStack {
@@ -17,19 +16,20 @@ struct SettingsView: View {
                     LabeledContent("New tabs", value: "Context home")
                 }
 
-                Section("Grok") {
+                Section {
                     Link(destination: ContextLinks.grok) {
                         Label("Open grok.com", systemImage: "sparkles")
                     }
                     Button(action: openGrokBot) {
                         Label("Open Grok Bot", systemImage: "arrow.up.forward.app")
                     }
-                    TextField("Grok Bot teammate", text: $teammateName)
+                } header: {
+                    Text("Grok")
+                } footer: {
                     Text(
-                        "The teammate name is included in handoffs. Current Grok Bot links can open "
-                            + "the app but cannot route Context directly to a named teammate."
+                        "Context does not connect to your Grok or X account. Use Ask Grok to review "
+                            + "and share page context through iOS."
                     )
-                        .foregroundStyle(.secondary)
                 }
 
                 Section("Privacy") {

@@ -50,4 +50,55 @@ final class ContextTests: XCTestCase {
         XCTAssertEqual(reloaded.bookmarks, library.bookmarks)
         XCTAssertEqual(reloaded.history, library.history)
     }
+
+    func testGrokHandoffIncludesReviewedPageContext() throws {
+        let pageURL = try XCTUnwrap(URL(string: "https://example.com/article"))
+        let readableText = String(repeating: "x", count: 24_001)
+        let handoff = GrokHandoffContent(
+            task: "Summarize the evidence.",
+            pageTitle: "Example article",
+            pageURL: pageURL,
+            readableText: readableText,
+            includeReadableText: true
+        )
+
+        XCTAssertTrue(handoff.prompt.contains("Task: Summarize the evidence."))
+        XCTAssertTrue(handoff.prompt.contains("Page title: Example article"))
+        XCTAssertTrue(handoff.prompt.contains("Page URL: https://example.com/article"))
+        XCTAssertTrue(handoff.prompt.contains(String(repeating: "x", count: 24_000)))
+        XCTAssertFalse(handoff.prompt.contains(String(repeating: "x", count: 24_001)))
+        XCTAssertTrue(handoff.prompt.contains("untrusted website content"))
+    }
+
+    func testGrokHandoffCanExcludeReadableText() {
+        let handoff = GrokHandoffContent(
+            task: "",
+            pageTitle: "Private page",
+            pageURL: nil,
+            readableText: "Sensitive text",
+            includeReadableText: false
+        )
+
+        XCTAssertTrue(handoff.prompt.contains("Task: Help me with this page."))
+        XCTAssertFalse(handoff.prompt.contains("Sensitive text"))
+        XCTAssertFalse(handoff.prompt.contains("Readable page text"))
+    }
+
+    func testXPostUsesOfficialReviewableWebIntent() throws {
+        let pageURL = try XCTUnwrap(URL(string: "https://example.com/article?ref=context"))
+        let intent = ContextLinks.xPostIntent(
+            title: "  Useful   article\nfor everyone  ",
+            url: pageURL
+        )
+        let components = try XCTUnwrap(URLComponents(url: intent, resolvingAgainstBaseURL: false))
+        let query = Dictionary(
+            uniqueKeysWithValues: try XCTUnwrap(components.queryItems).map { ($0.name, $0.value) }
+        )
+
+        XCTAssertEqual(components.scheme, "https")
+        XCTAssertEqual(components.host, "x.com")
+        XCTAssertEqual(components.path, "/intent/tweet")
+        XCTAssertEqual(query["text"]!, "Reading: Useful article for everyone")
+        XCTAssertEqual(query["url"]!, pageURL.absoluteString)
+    }
 }

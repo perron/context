@@ -147,11 +147,11 @@ Controls are continuously rounded. Compact identity marks and fields use 12-poin
 
 ### Navigation
 
-The iPhone browser island groups the address field, tab count, Grok Bot action, and More menu. iPad uses a native sidebar for tabs, Ask Grok Bot, Library, and Settings. Page-level browsing controls appear only when a real page is open.
+The iPhone browser island groups the address field, tab count, Ask Grok action, and More menu. iPad uses a native sidebar for tabs, Ask Grok, Library, and Settings. Page-level browsing controls appear only when a real page is open.
 
 ### Grok Handoff
 
-The handoff is a first-class blue action. Its review sheet names the teammate, task, page URL, and optional readable text, then makes copy, share, and app opening separate explicit choices.
+The handoff is a first-class blue action. Its review sheet shows the task, page URL, and optional readable text. One prominent Share to Grok action opens the native iOS share sheet; opening Grok or Grok Bot, composing an X post, and copying the prompt remain secondary explicit choices.
 
 ## Do's and Don'ts
 

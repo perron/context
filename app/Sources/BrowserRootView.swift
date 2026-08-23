@@ -328,7 +328,7 @@ private struct BrowserNavigationControls: View {
             Spacer()
 
             Button(action: showAssistant) {
-                Label("Ask Grok Bot", systemImage: "sparkles")
+                Label("Ask Grok", systemImage: "sparkles")
                     .labelStyle(.iconOnly)
             }
 

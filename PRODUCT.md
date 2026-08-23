@@ -8,11 +8,11 @@ ios
 
 ## Users
 
-Context is for people who use Grok, X, and Grok Bot as part of their daily work and want to carry useful web context into an assigned AI teammate without first copying material across several apps. The first release is also for privacy-conscious iPhone and iPad users who value a small, inspectable, open-source browser.
+Context is for people who use Grok, X, and Grok Bot as part of their daily work and want to carry useful web context into AI without rebuilding that context by hand. The first release is also for privacy-conscious iPhone and iPad users who value a small, inspectable, open-source browser.
 
 ## Product Purpose
 
-Context is a native iPhone and iPad browser that makes the current page useful to Grok. It provides real browsing, tabs, local bookmarks and history, content protection, reader extraction, and an explicit handoff that packages the page title, URL, selected or readable text, and the user's task for Grok or Grok Bot. Success means the browser is dependable on its own and the handoff saves meaningful effort without pretending Context owns the user's Grok account or Grok Bot conversations.
+Context is a native iPhone and iPad browser that makes the current page useful to Grok. It provides real browsing, tabs, local bookmarks and history, content protection, reader extraction, and an explicit handoff that packages the page title, URL, readable text, and the user's task. The user can share that prompt through iOS, open Grok or Grok Bot, copy it, or open a reviewable X post composer. Success means the browser is dependable on its own and the handoff saves meaningful effort without pretending Context owns the user's Grok, X, or Grok Bot accounts.
 
 ## Positioning
 
@@ -32,7 +32,8 @@ Context is Grok-first because the page handoff is a primary browser action, not 
 - Browsing data stays on device unless the user explicitly shares or sends it.
 - Context has no analytics or tracking SDK.
 - Context must not claim a direct Grok Bot conversation or assigned-bot API until Cursor publishes and Context implements such a contract.
-- Grok Bot currently exposes a deep link that opens the app, but no verified public route that starts a named bot with supplied page context. Version 1 therefore prepares a handoff, copies or shares it, and opens Grok Bot for the user.
+- Grok Bot currently exposes a deep link that opens the app, but no verified public route that starts a bot with supplied page context. Version 1 therefore prepares a reviewable prompt, uses the iOS share sheet for compatible destinations, and keeps app opening and copying as separate explicit actions.
+- Posting on X uses X's reviewable Web Intent. Context never posts automatically and does not request X account access.
 - Context does not perform autonomous web actions in version 1.
 - Default-browser status depends on Apple's entitlement and must not be promised before approval.
 - Desktop and Mac browser versions are outside the first release.

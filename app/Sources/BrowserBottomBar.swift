@@ -53,7 +53,7 @@ struct BrowserBottomBar: View {
                 GrokButton()
             }
             .buttonStyle(.plain)
-            .accessibilityLabel("Ask Grok Bot")
+            .accessibilityLabel("Ask Grok")
 
             Menu {
                 Button(action: showLibrary) {

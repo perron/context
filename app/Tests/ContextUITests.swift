@@ -18,13 +18,37 @@ final class ContextUITests: XCTestCase {
 
         XCTAssertTrue(app.textFields["Search or enter website"].waitForExistence(timeout: 5))
         XCTAssertTrue(app.staticTexts["Quick Links"].exists)
-        XCTAssertTrue(app.buttons["Ask your Grok Bot"].exists)
-        XCTAssertTrue(app.buttons["Ask Grok Bot"].exists)
+        XCTAssertTrue(app.buttons["Ask Grok"].exists)
 
         let attachment = XCTAttachment(screenshot: app.screenshot())
         attachment.name = "Context 1.0 New Tab"
         attachment.lifetime = .keepAlways
         add(attachment)
+    }
+
+    @MainActor
+    func testAskGrokReviewShowsExplicitDestinations() {
+        let app = XCUIApplication()
+        app.launchArguments = [
+            "-AppleLanguages", "(en)",
+            "-AppleLocale", "en_US",
+            "--ui-test-content-blocking"
+        ]
+        app.launch()
+
+        let askGrok = app.buttons["Ask Grok"].firstMatch
+        XCTAssertTrue(askGrok.waitForExistence(timeout: 20))
+        askGrok.tap()
+
+        XCTAssertTrue(app.navigationBars["Ask Grok"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.buttons["Share to Grok…"].exists)
+        addScreenshot(named: "Context 1.0 Ask Grok Primary Actions")
+
+        app.swipeUp()
+        XCTAssertTrue(app.buttons["Open Grok Bot"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.buttons["Post on X"].exists)
+        XCTAssertTrue(app.buttons["Copy prompt"].waitForExistence(timeout: 5))
+        addScreenshot(named: "Context 1.0 Ask Grok Secondary Actions")
     }
 
     @MainActor

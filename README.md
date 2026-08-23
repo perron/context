@@ -13,11 +13,11 @@ The launch scope is deliberately small and real:
 - EasyList and EasyPrivacy content blocking, including per-site controls
 - Reader mode for supported articles
 - System page sharing
-- A Grok-first home screen and explicit page handoff to Grok Bot
+- A Grok-first home screen and explicit, reviewable Ask Grok handoff
 - Local browser preferences with no analytics or tracking SDK
 - MPL-2.0 source code
 
-Grok accounts, subscriptions, and conversations are managed by xAI. Grok Bot accounts and conversations are managed by Cursor/Anysphere. Context does not include either service, and it is not affiliated with or endorsed by xAI, X, Cursor, or Anysphere.
+Grok and X accounts, subscriptions, and conversations are managed by xAI and X. Grok Bot accounts and conversations are managed by Cursor/Anysphere. Context can share prepared page context through iOS or open a reviewable X composer, but it does not sign in to or post through those accounts. Context is not affiliated with or endorsed by xAI, X, Cursor, or Anysphere.
 
 The planned US App Store price for version 1.0 is **$6.99 as a one-time purchase**. The App Store listing is not live until Apple accepts the uploaded build and completes review.
 

@@ -71,7 +71,7 @@ struct BrowserSidebar: View {
 
             VStack(spacing: 0) {
                 Button(action: showAssistant) {
-                    Label("Ask Grok Bot", systemImage: "sparkles")
+                    Label("Ask Grok", systemImage: "sparkles")
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding()
                 }
