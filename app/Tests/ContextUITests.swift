@@ -37,9 +37,9 @@ final class ContextUITests: XCTestCase {
         ]
         app.launch()
 
-        let webView = app.webViews.firstMatch
-        XCTAssertTrue(webView.waitForExistence(timeout: 5))
-        webView.coordinate(withNormalizedOffset: CGVector(dx: 0.38, dy: 0.28)).tap()
+        let newWindowLink = app.links["Open example.com"]
+        XCTAssertTrue(newWindowLink.waitForExistence(timeout: 5))
+        newWindowLink.tap()
 
         XCTAssertTrue(app.buttons["2 tabs"].waitForExistence(timeout: 5))
         XCTAssertEqual(app.state, .runningForeground)
@@ -111,6 +111,26 @@ final class ContextUITests: XCTestCase {
         addScreenshot(named: "Context 1.0 iPad Sidebar Expanded")
     }
 
+    @MainActor
+    func testFixedBottomPopupStaysAboveBrowserChrome() {
+        let app = XCUIApplication()
+        app.launchArguments = [
+            "-AppleLanguages", "(en)",
+            "-AppleLocale", "en_US",
+            "--ui-test-bottom-popup"
+        ]
+        app.launch()
+
+        let popupButton = app.buttons["Fixture popup close"]
+        let backButton = app.buttons["Back"]
+        XCTAssertTrue(popupButton.waitForExistence(timeout: 5))
+        XCTAssertTrue(backButton.waitForExistence(timeout: 5))
+        XCTAssertTrue(popupButton.isHittable)
+        XCTAssertLessThanOrEqual(popupButton.frame.maxY, backButton.frame.minY)
+        addScreenshot(named: "Context 1.0 Fixed Bottom Popup")
+    }
+
+    @MainActor
     private func addScreenshot(named name: String) {
         let attachment = XCTAttachment(screenshot: XCUIApplication().screenshot())
         attachment.name = name

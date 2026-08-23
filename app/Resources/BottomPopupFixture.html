@@ -1,0 +1,68 @@
+<!--
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at https://mozilla.org/MPL/2.0/.
+-->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Fixed bottom popup test</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 180vh;
+      margin: 0;
+      padding: 32px 24px;
+      background: #f6f4ee;
+      color: #14171c;
+      font: 19px/1.5 system-ui;
+    }
+
+    .backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgb(20 23 28 / 58%);
+    }
+
+    .popup {
+      position: fixed;
+      right: 12px;
+      bottom: 0;
+      left: 12px;
+      min-height: 220px;
+      padding: 28px 24px 20px;
+      border-radius: 28px 28px 0 0;
+      background: white;
+      box-shadow: 0 -8px 30px rgb(0 0 0 / 22%);
+    }
+
+    button {
+      position: absolute;
+      right: 24px;
+      bottom: 20px;
+      left: 24px;
+      min-height: 52px;
+      border: 0;
+      border-radius: 16px;
+      background: #14171c;
+      color: white;
+      font: 700 17px system-ui;
+    }
+  </style>
+</head>
+<body>
+  <h1>Article page</h1>
+  <p>This fixture reproduces a website popup anchored to the visual viewport.</p>
+  <div class="backdrop"></div>
+  <section class="popup" aria-label="Subscription popup">
+    <strong>Continue reading</strong>
+    <p>The entire popup must stay above Context's browser controls.</p>
+    <button type="button" aria-label="Fixture popup close">Close popup</button>
+  </section>
+</body>
+</html>

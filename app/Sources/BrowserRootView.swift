@@ -112,6 +112,7 @@ struct BrowserRootView: View {
             }
             configureUITestStateIfRequested()
             loadUITestFixtureIfRequested()
+            loadBottomPopupUITestFixtureIfRequested()
         }
         .task {
             await browser.prepareContentBlocking(bundle: .main)
@@ -120,8 +121,18 @@ struct BrowserRootView: View {
     }
 
     private var browserCanvas: some View {
+        VStack(spacing: 0) {
+            browserSurface
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+
+            browserChrome
+        }
+        .background(Color.contextPaper.ignoresSafeArea())
+    }
+
+    private var browserSurface: some View {
         ZStack {
-            Color.contextPaper.ignoresSafeArea()
+            Color.contextPaper
 
             if browser.selectedTab.isNewTab {
                 NewTabPage(
@@ -132,7 +143,6 @@ struct BrowserRootView: View {
                 )
             } else {
                 WebView(browser.selectedTab.page)
-                    .ignoresSafeArea(edges: .top)
 
                 if browser.selectedTab.page.isLoading {
                     VStack {
@@ -144,40 +154,42 @@ struct BrowserRootView: View {
                 }
             }
         }
-        .safeAreaInset(edge: .bottom, spacing: 0) {
-            VStack(spacing: 8) {
-                if !browser.selectedTab.isNewTab {
-                    BrowserNavigationControls(
-                        browser: browser,
-                        openReader: openReader,
-                        showAssistant: { isShowingAssistant = true },
-                        showLibrary: { isShowingLibrary = true },
-                        isBookmarked: library.isBookmarked(browser.selectedTab.page.url),
-                        toggleBookmark: toggleBookmark
-                    )
-                }
+    }
 
-                BrowserBottomBar(
-                    addressInput: $addressInput,
-                    tabCount: browser.tabs.count,
-                    submit: submitAddress,
-                    showTabs: { isShowingTabs = true },
+    private var browserChrome: some View {
+        VStack(spacing: 8) {
+            if !browser.selectedTab.isNewTab {
+                BrowserNavigationControls(
+                    browser: browser,
+                    openReader: openReader,
+                    showAssistant: { isShowingAssistant = true },
                     showLibrary: { isShowingLibrary = true },
-                    showSettings: { isShowingSettings = true },
-                    openGrok: openGrok,
-                    showAssistant: { isShowingAssistant = true }
+                    isBookmarked: library.isBookmarked(browser.selectedTab.page.url),
+                    toggleBookmark: toggleBookmark
                 )
             }
-            .padding(10)
-            .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 28, style: .continuous))
-            .overlay {
-                RoundedRectangle(cornerRadius: 28, style: .continuous)
-                    .stroke(.primary.opacity(0.12), lineWidth: 1)
-            }
-            .shadow(color: .black.opacity(0.22), radius: 18, y: 8)
-            .padding(.horizontal, 10)
-            .padding(.bottom, 4)
+
+            BrowserBottomBar(
+                addressInput: $addressInput,
+                tabCount: browser.tabs.count,
+                submit: submitAddress,
+                showTabs: { isShowingTabs = true },
+                showLibrary: { isShowingLibrary = true },
+                showSettings: { isShowingSettings = true },
+                openGrok: openGrok,
+                showAssistant: { isShowingAssistant = true }
+            )
         }
+        .padding(10)
+        .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 28, style: .continuous))
+        .overlay {
+            RoundedRectangle(cornerRadius: 28, style: .continuous)
+                .stroke(.primary.opacity(0.12), lineWidth: 1)
+        }
+        .shadow(color: .black.opacity(0.22), radius: 18, y: 8)
+        .padding(.horizontal, 10)
+        .padding(.bottom, 4)
+        .accessibilityIdentifier("browserChrome")
     }
 
     private func submitAddress() {
@@ -255,6 +267,20 @@ struct BrowserRootView: View {
             return
         }
         browser.loadHTML(html, baseURL: baseURL)
+        #endif
+    }
+
+    private func loadBottomPopupUITestFixtureIfRequested() {
+        #if DEBUG
+        guard ProcessInfo.processInfo.arguments.contains(
+            "--ui-test-bottom-popup"
+        ), let fixtureURL = Bundle.main.url(
+            forResource: "BottomPopupFixture",
+            withExtension: "html"
+        ) else {
+            return
+        }
+        browser.navigate(to: fixtureURL)
         #endif
     }
 }
