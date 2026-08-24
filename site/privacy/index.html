@@ -14,18 +14,20 @@
     <h1>Privacy Policy</h1>
     <p class="updated">Effective August 23, 2026</p>
 
-    <h2>What Context collects</h2>
-    <p>Context does not collect personal information, browsing history, search history, diagnostics, analytics, or advertising identifiers. Context does not use tracking SDKs and does not create an account of its own.</p>
+    <h2>What Topcloud receives</h2>
+    <p>Topcloud does not receive personal information, browsing history, search history, AI prompts, page context, API keys, AI responses, diagnostics, analytics, or advertising identifiers from Context. Context does not use tracking SDKs and does not create an account of its own. A selected AI provider may receive data as described below.</p>
 
     <h2>What stays on your device</h2>
-    <p>Bookmarks, browsing history, website data, and content-blocking preferences are processed and stored locally on your device. Deleting the app removes data stored by Context, subject to iOS behavior for app data and backups.</p>
+    <p>Bookmarks, browsing history, website data, and content-blocking preferences are processed and stored locally on your device. AI provider API keys are stored in iOS Keychain as this-device-only data available while the device is unlocked. Context does not place API keys in source code, UserDefaults, browser history, or app logs. Deleting an API key in Context removes that Keychain item.</p>
 
-    <h2>Ask Grok handoffs</h2>
-    <p>Context can prepare a prompt containing your task, page title, page URL, and—if you enable it—readable page text. Context does not send that prompt automatically. It leaves Context only when you copy it or choose a destination in the iOS share sheet. Opening Grok or Grok Bot is a separate action and does not transfer the prepared prompt by itself.</p>
+    <h2>Ask Grok and AI providers</h2>
+    <p>Context can prepare a prompt containing your task, page title, page URL, and - if you enable it - readable page text. If you add your own API key, Context sends the reviewed prompt and conversation directly to the AI provider you selected only when you press Send. Context asks providers not to retain server-side conversation state when their API supports that request option. The provider may still process or retain data under its own account settings, terms, and privacy policy.</p>
+    <p>Supported providers may include xAI, OpenAI, Anthropic, Google, OpenRouter, Moonshot AI, DeepSeek, and Mistral AI. API accounts and billing are separate from consumer subscriptions and from the purchase of Context. Context does not operate an AI relay or receive your provider API key, prompt, page context, or response.</p>
+    <p>You can also use the iOS share sheet. A shared prompt leaves Context only when you choose a destination. Opening Grok or Grok Bot is a separate action and does not transfer the prepared prompt by itself.</p>
     <p>Post on X opens X's composer with the page title and URL. Context does not include extracted page text in that post, does not post automatically, and does not receive your X credentials.</p>
 
     <h2>Websites, Grok, and Grok Bot</h2>
-    <p>When you visit a website, including grok.com, your device communicates directly with that third party. Those services may collect information under their own privacy policies. Context does not receive your Grok or Grok Bot credentials or conversations. Grok is provided by xAI; Grok Bot is provided by Cursor/Anysphere. Both are independent from Context.</p>
+    <p>When you visit a website, including grok.com, your device communicates directly with that third party. Those services may collect information under their own privacy policies. Context does not receive your Grok or Grok Bot consumer credentials or conversations. Grok is provided by xAI; Grok Bot is provided by Cursor/Anysphere. Both are independent from Context.</p>
 
     <h2>Content blocking</h2>
     <p>Context applies bundled EasyList and EasyPrivacy rules on the device. It does not download executable code or send blocked-request records to the developer.</p>

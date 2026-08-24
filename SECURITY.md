@@ -19,3 +19,12 @@ branch until versioned releases begin.
 Context never needs passwords, payment fields, CAPTCHA responses, or browser
 cookies for its Grok handoff. A request for any of these is outside the product
 contract and should be reported.
+
+User-supplied AI API keys are stored in iOS Keychain with this-device-only,
+when-unlocked accessibility. They must never be committed, logged, copied into
+UserDefaults, added to browser history, or embedded in a release build. Context
+sends a key only to the HTTPS endpoint belonging to the provider selected by
+the user.
+
+A Topcloud-owned shared provider key must not ship in the client app. Included
+AI usage requires a backend gateway and a separate security review.

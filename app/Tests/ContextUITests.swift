@@ -58,7 +58,8 @@ final class ContextUITests: XCTestCase {
         app.launchArguments = [
             "-AppleLanguages", "(en)",
             "-AppleLocale", "en_US",
-            "--ui-test-content-blocking"
+            "--ui-test-content-blocking",
+            "--ui-test-clear-ai-keys"
         ]
         app.launch()
 
@@ -67,14 +68,45 @@ final class ContextUITests: XCTestCase {
         askGrok.tap()
 
         XCTAssertTrue(app.navigationBars["Ask Grok"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.buttons["set-up-ai-provider-button"].exists)
         XCTAssertTrue(app.buttons["Share to Grok…"].exists)
-        addScreenshot(named: "Context 1.0 Ask Grok Primary Actions")
+        addScreenshot(named: "Context 1.0 Ask Grok API Setup")
 
-        app.swipeUp()
-        XCTAssertTrue(app.buttons["Open Grok Bot"].waitForExistence(timeout: 5))
+        app.buttons["Assistant options"].tap()
+        XCTAssertTrue(app.buttons["AI Provider Settings"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.buttons["Open Grok Bot"].exists)
         XCTAssertTrue(app.buttons["Post on X"].exists)
-        XCTAssertTrue(app.buttons["Copy prompt"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.buttons["Copy prompt"].exists)
         addScreenshot(named: "Context 1.0 Ask Grok Secondary Actions")
+    }
+
+    @MainActor
+    func testConfiguredGrokAPIShowsNativeChatAndReviewedContext() {
+        let app = XCUIApplication()
+        app.launchArguments = [
+            "-AppleLanguages", "(en)",
+            "-AppleLocale", "en_US",
+            "--ui-test-content-blocking",
+            "--ui-test-clear-ai-keys",
+            "--ui-test-ai-configured"
+        ]
+        app.launch()
+
+        let askGrok = app.buttons["Ask Grok"].firstMatch
+        XCTAssertTrue(askGrok.waitForExistence(timeout: 20))
+        askGrok.tap()
+
+        XCTAssertTrue(app.navigationBars["Ask Grok"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["Grok (xAI API)"].exists)
+        XCTAssertTrue(app.textFields["ai-chat-composer"].exists)
+        XCTAssertTrue(app.buttons["Send to Grok"].exists)
+        XCTAssertTrue(app.staticTexts["Page context"].exists)
+        XCTAssertEqual(
+            app.switches["Include readable page text"].value as? String,
+            "1",
+            "Readable page text should be included by default after the user reviews the context."
+        )
+        addScreenshot(named: "Context 1.0 Grok API Chat")
     }
 
     @MainActor
@@ -193,6 +225,17 @@ final class ContextUITests: XCTestCase {
         settingsButton.tap()
 
         XCTAssertTrue(app.navigationBars["Settings"].waitForExistence(timeout: 5))
+        let providerSettings = app.buttons["ai-provider-settings-link"]
+        XCTAssertTrue(providerSettings.waitForExistence(timeout: 5))
+        providerSettings.tap()
+        XCTAssertTrue(app.navigationBars["AI Providers"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.buttons["ai-provider-xAI"].exists)
+        XCTAssertTrue(app.buttons["ai-provider-openAI"].exists)
+        XCTAssertTrue(app.buttons["ai-provider-anthropic"].exists)
+        XCTAssertTrue(app.buttons["ai-provider-gemini"].exists)
+        addScreenshot(named: "Context 1.0 AI Providers")
+        app.navigationBars["AI Providers"].buttons.firstMatch.tap()
+
         let clearWebsiteData = app.buttons["clear-website-data-button"]
         if !clearWebsiteData.exists {
             app.swipeUp()

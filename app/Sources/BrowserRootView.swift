@@ -264,6 +264,16 @@ struct BrowserRootView: View {
         if ProcessInfo.processInfo.arguments.contains("--ui-test-sidebar-expanded") {
             isIPadSidebarVisible = true
         }
+        if ProcessInfo.processInfo.arguments.contains("--ui-test-clear-ai-keys") {
+            for provider in AIProvider.allCases {
+                try? APIKeyStore.shared.deleteKey(for: provider)
+            }
+            AIProviderPreferences.setSelectedProvider(.xAI)
+        }
+        if ProcessInfo.processInfo.arguments.contains("--ui-test-ai-configured") {
+            try? APIKeyStore.shared.save("ui-test-key-not-valid", for: .xAI)
+            AIProviderPreferences.setSelectedProvider(.xAI)
+        }
         #endif
     }
 
@@ -450,47 +460,6 @@ private struct BrowserNavigationControls: View {
             browser.isBlockingSelectedSite ? "shield.checkered" : "shield.slash"
         case .failed:
             "exclamationmark.shield"
-        }
-    }
-}
-
-private struct ReaderView: View {
-    let document: ReaderDocument
-    @Environment(\.dismiss) private var dismiss
-
-    var body: some View {
-        NavigationStack {
-            ScrollView {
-                VStack(alignment: .leading, spacing: 18) {
-                    Text(document.title)
-                        .font(.largeTitle.bold())
-                        .textSelection(.enabled)
-
-                    if let byline = document.byline {
-                        Text(byline)
-                            .font(.subheadline)
-                            .foregroundStyle(.secondary)
-                    }
-
-                    Text(document.body)
-                        .font(.body)
-                        .lineSpacing(7)
-                        .textSelection(.enabled)
-                }
-                .frame(maxWidth: 680, alignment: .leading)
-                .padding(24)
-                .frame(maxWidth: .infinity)
-            }
-            .background(Color.contextPaper)
-            .navigationTitle("Reader")
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .confirmationAction) {
-                    Button("Done") {
-                        dismiss()
-                    }
-                }
-            }
         }
     }
 }

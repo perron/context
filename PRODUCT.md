@@ -12,11 +12,11 @@ Context is for people who use Grok, X, and Grok Bot as part of their daily work 
 
 ## Product Purpose
 
-Context is a native iPhone and iPad browser that makes the current page useful to Grok. It provides real browsing, tabs, local bookmarks and history, content protection, reader extraction, and an explicit handoff that packages the page title, URL, readable text, and the user's task. The user can share that prompt through iOS, open Grok or Grok Bot, copy it, or open a reviewable X post composer. Success means the browser is dependable on its own and the handoff saves meaningful effort without pretending Context owns the user's Grok, X, or Grok Bot accounts.
+Context is a native iPhone and iPad browser that makes the current page useful to Grok. It provides real browsing, tabs, local bookmarks and history, content protection, reader extraction, and an explicit Ask Grok surface that packages the page title, URL, readable text, and the user's task. The user can send that reviewed context directly with their own xAI API key, choose another supported API provider, share through iOS, open Grok or Grok Bot, copy it, or open a reviewable X post composer. Success means the browser is dependable on its own and page context saves meaningful effort without pretending Context owns the user's Grok, X, or Grok Bot accounts.
 
 ## Positioning
 
-Context is Grok-first because the page handoff is a primary browser action, not a generic chatbot bolted onto a browser. The browser remains local and inspectable. The user chooses when content leaves the device and which Grok destination receives it.
+Context is Grok-first because Ask Grok is a primary browser action, not a generic chatbot bolted onto a browser. The browser remains local and inspectable. The user chooses when content leaves the device and whether it goes to the selected API provider or a reviewed share destination.
 
 ## Operating Context
 
@@ -31,6 +31,9 @@ Context is Grok-first because the page handoff is a primary browser action, not 
 - WebKit is the browser engine.
 - Browsing data stays on device unless the user explicitly shares or sends it.
 - Context has no analytics or tracking SDK.
+- User-supplied AI API keys stay in iOS Keychain and never enter the repository, browser history, logs, or UserDefaults.
+- Direct AI chat is opt-in and uses the user's separate provider API account. Grok through xAI is the default; OpenAI, Anthropic, Gemini, OpenRouter, Kimi, DeepSeek, and Mistral are optional.
+- Ask Grok shows page context before the first send. Context sends it directly to the selected provider only after the user presses Send.
 - Context must not claim a direct Grok Bot conversation or assigned-bot API until Cursor publishes and Context implements such a contract.
 - Grok Bot currently exposes a deep link that opens the app, but no verified public route that starts a bot with supplied page context. Version 1 therefore prepares a reviewable prompt, uses the iOS share sheet for compatible destinations, and keeps app opening and copying as separate explicit actions.
 - Posting on X uses X's reviewable Web Intent. Context never posts automatically and does not request X account access.

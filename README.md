@@ -2,7 +2,7 @@
 
 **A private, open-source, Grok-first browser for iPhone and iPad.**
 
-Context is a native SwiftUI browser built on Apple's WebKit. It gives Grok a permanent place in the browsing flow without scraping sessions, storing AI credentials, or pretending a web login is an embedded API integration.
+Context is a native SwiftUI browser built on Apple's WebKit. It gives Grok a permanent place in the browsing flow without scraping sessions or pretending a web login is an API integration. Users may store their own provider API keys in iOS Keychain for direct, explicit chat.
 
 ## Context 1.0
 
@@ -13,11 +13,17 @@ The launch scope is deliberately small and real:
 - EasyList and EasyPrivacy content blocking, including per-site controls
 - Reader mode for supported articles
 - System page sharing
-- A Grok-first home screen and explicit, reviewable Ask Grok handoff
+- Direct Ask Grok chat with a user-supplied xAI API key and reviewed page context
+- Optional OpenAI, Anthropic, Gemini, OpenRouter, Kimi, DeepSeek, and Mistral API providers
+- Share, copy, Grok Bot, and reviewable X composer fallbacks
 - Local browser preferences with no analytics or tracking SDK
 - MPL-2.0 source code
 
-Grok and X accounts, subscriptions, and conversations are managed by xAI and X. Grok Bot accounts and conversations are managed by Cursor/Anysphere. Context can share prepared page context through iOS or open a reviewable X composer, but it does not sign in to or post through those accounts. Context is not affiliated with or endorsed by xAI, X, Cursor, or Anysphere.
+Grok and X consumer accounts and subscriptions are managed by xAI and X. Grok Bot accounts and conversations are managed by Cursor/Anysphere. API accounts, credits, retention, and billing are managed separately by each selected provider. Context does not sign in to or post through consumer accounts. Context is not affiliated with or endorsed by any supported AI provider, X, Cursor, or Anysphere.
+
+The 1.0 release checklist recommends a United States-only launch while direct
+provider-account links remain in the app. See `docs/APP_STORE_RELEASE.md`
+before enabling additional storefronts.
 
 The planned US App Store price for version 1.0 is **$6.99 as a one-time purchase**. The App Store listing is not live until Apple accepts the uploaded build and completes review.
 

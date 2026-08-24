@@ -21,6 +21,13 @@ struct SettingsView: View {
                 }
 
                 Section {
+                    NavigationLink {
+                        AIProviderSettingsView()
+                    } label: {
+                        Label("AI Providers", systemImage: "key")
+                    }
+                    .accessibilityIdentifier("ai-provider-settings-link")
+
                     Link(destination: ContextLinks.grok) {
                         Label("Open grok.com", systemImage: "sparkles")
                     }
@@ -31,14 +38,15 @@ struct SettingsView: View {
                     Text("Grok")
                 } footer: {
                     Text(
-                        "Context does not connect to your Grok or X account. Use Ask Grok to review "
-                            + "and share page context through iOS."
+                        "Context does not connect to your Grok or X account. You can add a separate "
+                            + "xAI API key for direct chat or use Ask Grok to share through iOS."
                     )
                 }
 
                 Section("Privacy") {
                     Label("History stays on this device", systemImage: "iphone")
                     Label("No analytics or tracking SDK", systemImage: "hand.raised")
+                    Label("AI API keys stay in Keychain", systemImage: "key.fill")
                     Button(role: .destructive) {
                         isShowingClearDataConfirmation = true
                     } label: {
