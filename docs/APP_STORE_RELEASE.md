@@ -41,6 +41,11 @@ reviewable web composer and never posts automatically.
    3.1.1 permits external purchase calls to action in the U.S. storefront but
    restricts them in many other storefronts. Before adding territories, remove
    or region-gate those links and recheck the current rule with App Review.
+9. Use the exact paste-ready listing, privacy answers, reviewer instructions,
+   and screenshot order in `docs/APP_STORE_METADATA.md`.
+10. Answer Yes to unrestricted web access in the age-rating questionnaire.
+    Apple's current global capability tier for unrestricted web access is 16+;
+    App Store Connect determines the final regional ratings.
 
 ## App privacy answers for the BYO API build
 

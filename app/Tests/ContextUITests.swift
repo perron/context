@@ -63,6 +63,10 @@ final class ContextUITests: XCTestCase {
         ]
         app.launch()
 
+        XCTAssertTrue(
+            app.staticTexts["A quieter web"].waitForExistence(timeout: 20),
+            "The reviewed article fixture must finish loading before Ask Grok opens."
+        )
         let askGrok = app.buttons["Ask Grok"].firstMatch
         XCTAssertTrue(askGrok.waitForExistence(timeout: 20))
         askGrok.tap()
@@ -92,6 +96,10 @@ final class ContextUITests: XCTestCase {
         ]
         app.launch()
 
+        XCTAssertTrue(
+            app.staticTexts["A quieter web"].waitForExistence(timeout: 20),
+            "The reviewed article fixture must finish loading before Ask Grok opens."
+        )
         let askGrok = app.buttons["Ask Grok"].firstMatch
         XCTAssertTrue(askGrok.waitForExistence(timeout: 20))
         askGrok.tap()
