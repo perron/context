@@ -129,14 +129,19 @@ enum AIRequestBuilder {
                 "store": false
             ]
         case .chatCompletions:
-            return [
+            var body: [String: Any] = [
                 "model": model,
                 "messages": [
                     ["role": "system", "content": systemInstruction]
                 ] + messages,
-                "max_tokens": 4_096,
                 "stream": false
             ]
+            if chatRequest.provider == .kimi {
+                body["max_completion_tokens"] = 4_096
+            } else {
+                body["max_tokens"] = 4_096
+            }
+            return body
         }
     }
 

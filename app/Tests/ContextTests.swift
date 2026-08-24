@@ -190,6 +190,13 @@ final class ContextTests: XCTestCase {
             XCTAssertEqual(messages.first?["role"], "system")
             XCTAssertEqual(messages.last?["content"], "What matters here?")
             XCTAssertEqual(body["stream"] as? Bool, false)
+            if provider == .kimi {
+                XCTAssertEqual(body["max_completion_tokens"] as? Int, 4_096)
+                XCTAssertNil(body["max_tokens"])
+            } else {
+                XCTAssertEqual(body["max_tokens"] as? Int, 4_096)
+                XCTAssertNil(body["max_completion_tokens"])
+            }
         }
     }
 
