@@ -31,4 +31,5 @@ install -m 0644 \
 "$repo_root/scripts/compile-content-rules.swift" \
   "$repo_root/third-party/easylist/easylist.txt" \
   "$repo_root/third-party/easylist/easyprivacy.txt" \
+  "$repo_root/filters/context.txt" \
   "$repo_root/app/Resources/ContentRules"

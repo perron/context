@@ -31,6 +31,7 @@ public struct ContentRuleManifest: Decodable, Sendable {
 public struct PreparedContentRules {
     public let manifest: ContentRuleManifest
     public let ruleLists: [WKContentRuleList]
+    public let cosmeticEnforcementScript: WKUserScript
 }
 
 public enum ContentRuleBundleError: LocalizedError {
@@ -70,6 +71,10 @@ public enum ContentRuleBundleLoader {
             ContentRuleManifest.self,
             from: Data(contentsOf: manifestURL)
         )
+        let cosmeticScriptSource = try textResource(
+            named: "cosmetic-enforcement.js",
+            bundle: bundle
+        )
         var ruleLists: [WKContentRuleList] = []
 
         for shard in manifest.shards {
@@ -81,13 +86,10 @@ public enum ContentRuleBundleLoader {
                 continue
             }
 
-            let sourceURL = try resourceURL(named: shard.file, bundle: bundle)
-            guard let encodedRules = String(
-                data: try Data(contentsOf: sourceURL),
-                encoding: .utf8
-            ) else {
-                throw ContentRuleBundleError.invalidText(shard.file)
-            }
+            let encodedRules = try textResource(
+                named: shard.file,
+                bundle: bundle
+            )
             let compiled: WKContentRuleList
             do {
                 compiled = try await compile(
@@ -105,7 +107,13 @@ public enum ContentRuleBundleLoader {
 
         return PreparedContentRules(
             manifest: manifest,
-            ruleLists: ruleLists
+            ruleLists: ruleLists,
+            cosmeticEnforcementScript: WKUserScript(
+                source: cosmeticScriptSource,
+                injectionTime: .atDocumentStart,
+                forMainFrameOnly: true,
+                in: .defaultClient
+            )
         )
     }
 
@@ -149,6 +157,20 @@ public enum ContentRuleBundleLoader {
             return url
         }
         throw ContentRuleBundleError.missingResource(name)
+    }
+
+    private static func textResource(
+        named name: String,
+        bundle: Bundle
+    ) throws -> String {
+        let url = try resourceURL(named: name, bundle: bundle)
+        guard let text = String(
+            data: try Data(contentsOf: url),
+            encoding: .utf8
+        ) else {
+            throw ContentRuleBundleError.invalidText(name)
+        }
+        return text
     }
 
     private static func lookup(

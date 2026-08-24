@@ -33,7 +33,14 @@ final class ContextTests: XCTestCase {
             preparedRules.ruleLists.count,
             preparedRules.manifest.shards.count
         )
-        XCTAssertGreaterThan(preparedRules.manifest.totalRuleCount, 100_000)
+        XCTAssertGreaterThan(preparedRules.manifest.totalRuleCount, 130_000)
+        XCTAssertGreaterThan(
+            preparedRules.manifest.shards
+                .filter { $0.file.contains("-cosmetic-") }
+                .reduce(0) { $0 + $1.ruleCount },
+            20_000,
+            "The bundled rules must include EasyList's standard cosmetic filters."
+        )
     }
 
     @MainActor

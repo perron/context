@@ -1,0 +1,1 @@
+[{"action":{"selector":":is(.cls-ad-top-center, #context-content-blocker-never-match)","type":"css-display-none"},"trigger":{"if-domain":["*yahoo.com"],"url-filter":".*"}}]

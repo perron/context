@@ -68,6 +68,12 @@ struct BrowserRootView: View {
             }
         }
         .background(Color.contextPaper)
+        .overlay(alignment: .top) {
+            Color.contextPaper
+                .frame(height: statusBarHeight)
+                .offset(y: -statusBarHeight)
+                .allowsHitTesting(false)
+        }
         .sheet(isPresented: $isShowingTabs) {
             TabSwitcherView(browser: browser)
         }
@@ -129,6 +135,7 @@ struct BrowserRootView: View {
         .task {
             await browser.prepareContentBlocking(bundle: .main)
             loadContentBlockingUITestFixtureIfRequested()
+            CosmeticBlockingUITestFixture.load(into: browser)
         }
     }
 
@@ -166,6 +173,12 @@ struct BrowserRootView: View {
                 }
             }
         }
+    }
+
+    private var statusBarHeight: CGFloat {
+        (UIApplication.shared.connectedScenes.first as? UIWindowScene)?
+            .statusBarManager?
+            .statusBarFrame.height ?? 0
     }
 
     private var browserChrome: some View {
@@ -274,6 +287,7 @@ struct BrowserRootView: View {
             try? APIKeyStore.shared.save("ui-test-key-not-valid", for: .xAI)
             AIProviderPreferences.setSelectedProvider(.xAI)
         }
+        CosmeticBlockingUITestFixture.configure(browser: browser)
         #endif
     }
 

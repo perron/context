@@ -175,6 +175,42 @@ final class ContextUITests: XCTestCase {
     }
 
     @MainActor
+    func testCosmeticProtectionRemovesYahooAdShell() {
+        let app = XCUIApplication()
+        app.launchArguments = [
+            "-AppleLanguages", "(en)",
+            "-AppleLocale", "en_US",
+            "--ui-test-cosmetic-blocking"
+        ]
+        app.launch()
+
+        XCTAssertTrue(
+            app.staticTexts["Yahoo layout check"].waitForExistence(timeout: 20),
+            "The Yahoo-domain fixture must load after WebKit finishes compiling the rules."
+        )
+        let adLabel = app.staticTexts["Advertisement"]
+        XCTAssertFalse(
+            adLabel.exists,
+            "Cosmetic protection must remove Yahoo's empty sticky advertisement shell."
+        )
+        addScreenshot(named: "Context 1.0 Yahoo Cosmetic Protection On")
+
+        app.webViews.firstMatch.swipeUp()
+        addScreenshot(named: "Context 1.0 Yahoo Safe Area While Scrolled")
+
+        app.terminate()
+        app.launchArguments.append("--ui-test-protection-off")
+        app.launch()
+        XCTAssertTrue(app.staticTexts["Yahoo layout check"].waitForExistence(timeout: 20))
+        XCTAssertTrue(app.buttons["Protection off"].waitForExistence(timeout: 5))
+        XCTAssertTrue(
+            app.staticTexts["Advertisement"].waitForExistence(timeout: 5),
+            "Turning protection off must restore the page without cosmetic filtering."
+        )
+        addScreenshot(named: "Context 1.0 Yahoo Cosmetic Protection Off")
+    }
+
+    @MainActor
     func testIPadSidebarCanHideAndShow() throws {
         guard UIDevice.current.userInterfaceIdiom == .pad else {
             throw XCTSkip("The persistent tab sidebar is an iPad layout.")

@@ -66,9 +66,13 @@ public final class BrowserTab: ObservableObject, Identifiable {
 
     private func applyContentBlockingState() {
         userContentController.removeAllContentRuleLists()
+        userContentController.removeAllUserScripts()
         guard isContentBlockingEnabled, let preparedContentRules else {
             return
         }
+        userContentController.addUserScript(
+            preparedContentRules.cosmeticEnforcementScript
+        )
         for ruleList in preparedContentRules.ruleLists {
             userContentController.add(ruleList)
         }

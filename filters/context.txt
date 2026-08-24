@@ -1,0 +1,10 @@
+! This Source Code Form is subject to the terms of the Mozilla Public
+! License, v. 2.0. If a copy of the MPL was not distributed with this
+! file, You can obtain one at https://mozilla.org/MPL/2.0/.
+! Title: Context Supplemental Filters
+! Version: 2026.08.24.1
+! Commit: bundled
+! Last modified: 24 Aug 2026
+
+! Yahoo's current mobile top-ad wrapper is newer than the pinned EasyList rule.
+yahoo.com##.cls-ad-top-center

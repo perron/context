@@ -1,0 +1,1 @@
+[{"action":{"selector":":is(#cxense-recs-in-article, #context-content-blocker-never-match)","type":"css-display-none"},"trigger":{"url-filter":".*"}},{"action":{"selector":":is(.embed-responsive-trendmd, #context-content-blocker-never-match)","type":"css-display-none"},"trigger":{"url-filter":".*"}}]

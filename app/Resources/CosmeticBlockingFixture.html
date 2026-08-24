@@ -1,0 +1,70 @@
+<!--
+  This Source Code Form is subject to the terms of the Mozilla Public
+  License, v. 2.0. If a copy of the MPL was not distributed with this
+  file, You can obtain one at https://mozilla.org/MPL/2.0/.
+-->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Yahoo layout check</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #f7f8fa;
+      color: #101218;
+      font: 18px/1.5 system-ui;
+    }
+
+    .cls-ad-top-center {
+      display: flex !important;
+      align-items: center;
+      justify-content: center;
+      position: sticky;
+      top: 0;
+      z-index: 3;
+      height: 72px;
+      padding-top: 8px;
+      background: #fff3cd;
+      color: #5c4500;
+      text-align: center;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      padding: 18px 20px;
+      background: #5f01d1;
+      color: white;
+      font-weight: 700;
+    }
+
+    main {
+      min-height: 1200px;
+      padding: 28px 20px;
+    }
+  </style>
+</head>
+<body>
+  <div
+    class="cls-ad-top-center"
+    role="region"
+    aria-label="Yahoo advertisement shell"
+  >
+    Advertisement
+  </div>
+  <header>Yahoo layout check</header>
+  <main>
+    <p>
+      The purple site header must remain while protection removes the empty
+      advertisement shell above it.
+    </p>
+  </main>
+</body>
+</html>
