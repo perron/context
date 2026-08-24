@@ -12,6 +12,17 @@ final class ContextTests: XCTestCase {
         XCTAssertTrue(true)
     }
 
+    func testMediaCaptureUsageDescriptionsShipInTheApp() {
+        XCTAssertEqual(
+            Bundle.main.object(forInfoDictionaryKey: "NSCameraUsageDescription") as? String,
+            "Context lets websites you choose use the camera for calls, scanning, and media capture."
+        )
+        XCTAssertEqual(
+            Bundle.main.object(forInfoDictionaryKey: "NSMicrophoneUsageDescription") as? String,
+            "Context lets websites you choose use the microphone for voice input, calls, and media capture."
+        )
+    }
+
     @MainActor
     func testBundledContentRulesCompile() async throws {
         let preparedRules = try await ContentRuleBundleLoader.prepare(
