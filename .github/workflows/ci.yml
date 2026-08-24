@@ -55,12 +55,14 @@ jobs:
         run: ./scripts/bootstrap.sh
       - name: Test shipped app resources
         run: |
+          # Keep simulator ad-hoc signing enabled so Security.framework can
+          # exercise the real Keychain implementation instead of returning
+          # errSecMissingEntitlement for an unsigned test host.
           xcodebuild test \
             -project Context.xcodeproj \
             -scheme Context \
             -destination "platform=iOS Simulator,name=iPhone 17 Pro,OS=latest" \
-            -only-testing:ContextTests \
-            CODE_SIGNING_ALLOWED=NO
+            -only-testing:ContextTests
 
   lint:
     name: SwiftLint and license headers
