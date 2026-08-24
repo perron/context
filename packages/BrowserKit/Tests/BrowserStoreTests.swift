@@ -82,6 +82,17 @@ final class BrowserStoreTests: XCTestCase {
         XCTAssertEqual(disposition, .openExternal(url))
     }
 
+    func testJavaScriptSchemeIsCancelled() {
+        let url = URL(string: "javascript:alert(1)")!
+
+        let disposition = BrowserNavigationPolicy.disposition(
+            for: url,
+            requestsNewWindow: false
+        )
+
+        XCTAssertEqual(disposition, .cancel)
+    }
+
     func testAppStoreWebLinkLeavesContext() {
         let url = URL(string: "https://apps.apple.com/app/id123")!
 

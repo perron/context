@@ -7,6 +7,7 @@ import WebKit
 
 public enum BrowserNavigationDisposition: Equatable, Sendable {
     case allow
+    case cancel
     case openContextTab(URL)
     case openExternal(URL)
 }
@@ -27,6 +28,10 @@ public enum BrowserNavigationPolicy {
 
         if ["file", "about", "data", "blob"].contains(scheme) {
             return .allow
+        }
+
+        if scheme == "javascript" {
+            return .cancel
         }
 
         guard scheme == "http" || scheme == "https" else {
@@ -80,6 +85,8 @@ public struct BrowserNavigationDecider: WebPage.NavigationDeciding {
         switch disposition {
         case .allow:
             return .allow
+        case .cancel:
+            return .cancel
         case .openContextTab, .openExternal:
             router.route(disposition)
             return .cancel

@@ -27,6 +27,7 @@ struct BrowserRootView: View {
     @State private var didLoadUITestFixture = false
     @State private var readerDocument: ReaderDocument?
     @State private var readerError: String?
+    @State private var pendingExternalURL: ExternalURLRequest?
 
     var body: some View {
         Group {
@@ -93,6 +94,16 @@ struct BrowserRootView: View {
         } message: {
             Text(readerError ?? "")
         }
+        .alert(item: $pendingExternalURL) { request in
+            Alert(
+                title: Text("Open another app?"),
+                message: Text(request.url.absoluteString),
+                primaryButton: .default(Text("Open")) {
+                    UIApplication.shared.open(request.url)
+                },
+                secondaryButton: .cancel()
+            )
+        }
         .onChange(of: browser.selectedTabID, initial: true) {
             syncAddress()
         }
@@ -108,11 +119,12 @@ struct BrowserRootView: View {
         }
         .onAppear {
             browser.externalURLHandler = { url in
-                UIApplication.shared.open(url)
+                pendingExternalURL = ExternalURLRequest(url: url)
             }
             configureUITestStateIfRequested()
             loadUITestFixtureIfRequested()
             loadBottomPopupUITestFixtureIfRequested()
+            loadExternalURLUITestFixtureIfRequested()
         }
         .task {
             await browser.prepareContentBlocking(bundle: .main)
@@ -283,6 +295,20 @@ struct BrowserRootView: View {
         browser.navigate(to: fixtureURL)
         #endif
     }
+
+    private func loadExternalURLUITestFixtureIfRequested() {
+        #if DEBUG
+        guard ProcessInfo.processInfo.arguments.contains(
+            "--ui-test-external-url"
+        ), let fixtureURL = Bundle.main.url(
+            forResource: "ExternalURLFixture",
+            withExtension: "html"
+        ) else {
+            return
+        }
+        browser.navigate(to: fixtureURL)
+        #endif
+    }
 }
 
 private struct BrowserNavigationControls: View {
@@ -359,19 +385,32 @@ private struct BrowserNavigationControls: View {
                     Label("Library", systemImage: "books.vertical")
                 }
 
-                Button {
-                    browser.setBlockingForSelectedSite(
-                        !browser.isBlockingSelectedSite
-                    )
-                } label: {
-                    Label(
-                        browser.isBlockingSelectedSite
-                            ? "Turn off for this site"
-                            : "Turn on for this site",
-                        systemImage: browser.isBlockingSelectedSite
-                            ? "shield.slash"
-                            : "shield.checkered"
-                    )
+                switch browser.contentRuleStatus {
+                case .preparing:
+                    Label("Protection preparing", systemImage: "shield.lefthalf.filled")
+                case .ready:
+                    Button {
+                        browser.setBlockingForSelectedSite(
+                            !browser.isBlockingSelectedSite
+                        )
+                    } label: {
+                        Label(
+                            browser.isBlockingSelectedSite
+                                ? "Turn off for this site"
+                                : "Turn on for this site",
+                            systemImage: browser.isBlockingSelectedSite
+                                ? "shield.slash"
+                                : "shield.checkered"
+                        )
+                    }
+                case .failed:
+                    Button {
+                        Task {
+                            await browser.prepareContentBlocking(bundle: .main)
+                        }
+                    } label: {
+                        Label("Retry protection", systemImage: "arrow.clockwise")
+                    }
                 }
 
                 Button(action: openReader) {
@@ -379,12 +418,8 @@ private struct BrowserNavigationControls: View {
                 }
             } label: {
                 Label(
-                    browser.isBlockingSelectedSite
-                        ? "Protection on"
-                        : "Protection off",
-                    systemImage: browser.isBlockingSelectedSite
-                        ? "shield.checkered"
-                        : "shield.slash"
+                    protectionLabel,
+                    systemImage: protectionSymbol
                 )
                 .labelStyle(.iconOnly)
             }
@@ -394,6 +429,28 @@ private struct BrowserNavigationControls: View {
         .tint(Color.contextInk)
         .padding(.horizontal, 14)
         .frame(minHeight: 44)
+    }
+
+    private var protectionLabel: String {
+        switch browser.contentRuleStatus {
+        case .preparing:
+            "Protection preparing"
+        case .ready:
+            browser.isBlockingSelectedSite ? "Protection on" : "Protection off"
+        case .failed:
+            "Protection unavailable"
+        }
+    }
+
+    private var protectionSymbol: String {
+        switch browser.contentRuleStatus {
+        case .preparing:
+            "shield.lefthalf.filled"
+        case .ready:
+            browser.isBlockingSelectedSite ? "shield.checkered" : "shield.slash"
+        case .failed:
+            "exclamationmark.shield"
+        }
     }
 }
 

@@ -4,9 +4,13 @@
 
 import Foundation
 import SwiftUI
+import WebKit
 
 struct SettingsView: View {
     @Environment(\.dismiss) private var dismiss
+    @State private var isShowingClearDataConfirmation = false
+    @State private var isClearingWebsiteData = false
+    @State private var didClearWebsiteData = false
 
     var body: some View {
         NavigationStack {
@@ -35,6 +39,20 @@ struct SettingsView: View {
                 Section("Privacy") {
                     Label("History stays on this device", systemImage: "iphone")
                     Label("No analytics or tracking SDK", systemImage: "hand.raised")
+                    Button(role: .destructive) {
+                        isShowingClearDataConfirmation = true
+                    } label: {
+                        Label("Clear website data", systemImage: "trash")
+                    }
+                    .accessibilityIdentifier("clear-website-data-button")
+                    .disabled(isClearingWebsiteData)
+                    if isClearingWebsiteData {
+                        Label("Clearing website data…", systemImage: "hourglass")
+                            .foregroundStyle(.secondary)
+                    } else if didClearWebsiteData {
+                        Label("Website data cleared", systemImage: "checkmark.circle")
+                            .foregroundStyle(.secondary)
+                    }
                     Link(destination: ContextLinks.privacy) {
                         Label("Privacy policy", systemImage: "doc.text")
                     }
@@ -58,6 +76,13 @@ struct SettingsView: View {
                     }
                     LabeledContent("Version", value: versionDescription)
                     LabeledContent("License", value: "MPL-2.0")
+                    Link(destination: ContextLinks.easyListLicense) {
+                        Label(
+                            "EasyList and EasyPrivacy (CC BY-SA)",
+                            systemImage: "shield.checkered"
+                        )
+                    }
+                    .accessibilityIdentifier("easylist-attribution-link")
                     Link(destination: ContextLinks.source) {
                         Label("Source code", systemImage: "chevron.left.forwardslash.chevron.right")
                     }
@@ -67,6 +92,21 @@ struct SettingsView: View {
                 }
             }
             .navigationTitle("Settings")
+            .confirmationDialog(
+                "Clear website data?",
+                isPresented: $isShowingClearDataConfirmation,
+                titleVisibility: .visible
+            ) {
+                Button("Clear website data", role: .destructive) {
+                    clearWebsiteData()
+                }
+                Button("Cancel", role: .cancel) {}
+            } message: {
+                Text(
+                    "This signs you out of websites and removes their cookies, cache, and local storage. "
+                        + "Bookmarks and browsing history are not removed."
+                )
+            }
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Done") {
@@ -93,6 +133,30 @@ struct SettingsView: View {
                 return
             }
             UIApplication.shared.open(ContextLinks.grokBotHelp)
+        }
+    }
+
+    private func clearWebsiteData() {
+        isClearingWebsiteData = true
+        didClearWebsiteData = false
+        Task {
+            await WebsiteDataCleaner.clearAll()
+            isClearingWebsiteData = false
+            didClearWebsiteData = true
+        }
+    }
+}
+
+@MainActor
+private enum WebsiteDataCleaner {
+    static func clearAll() async {
+        await withCheckedContinuation { continuation in
+            WKWebsiteDataStore.default().removeData(
+                ofTypes: WKWebsiteDataStore.allWebsiteDataTypes(),
+                modifiedSince: .distantPast
+            ) {
+                continuation.resume()
+            }
         }
     }
 }

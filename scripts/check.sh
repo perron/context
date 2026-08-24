@@ -10,6 +10,7 @@ derived_data="${TMPDIR:-/tmp}/context-derived-data"
 
 "$repo_root/scripts/bootstrap.sh"
 "$repo_root/scripts/check-licenses.sh"
+"$repo_root/scripts/compile-content-rules.swift" --self-test
 
 for package in BrowserKit SearchKit; do
   swift test --disable-sandbox --package-path "$repo_root/packages/$package"

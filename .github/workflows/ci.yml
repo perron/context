@@ -44,6 +44,24 @@ jobs:
             swift test --disable-sandbox --package-path "packages/$package"
           done
 
+  app-tests:
+    name: App tests
+    runs-on: macos-26
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Install XcodeGen
+        run: brew install xcodegen
+      - name: Generate project
+        run: ./scripts/bootstrap.sh
+      - name: Test shipped app resources
+        run: |
+          xcodebuild test \
+            -project Context.xcodeproj \
+            -scheme Context \
+            -destination "platform=iOS Simulator,name=iPhone 17 Pro,OS=latest" \
+            -only-testing:ContextTests \
+            CODE_SIGNING_ALLOWED=NO
+
   lint:
     name: SwiftLint and license headers
     runs-on: macos-26

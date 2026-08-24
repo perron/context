@@ -38,6 +38,7 @@ struct BrowserBottomBar: View {
                 }
                 .buttonStyle(.plain)
                 .foregroundStyle(Color.contextInk)
+                .frame(minWidth: 44, minHeight: 44)
                 .accessibilityLabel("\(tabCount) tabs")
             }
             .padding(.leading, 14)
@@ -65,6 +66,7 @@ struct BrowserBottomBar: View {
                 Button(action: showSettings) {
                     Label("Settings", systemImage: "gearshape")
                 }
+                .accessibilityIdentifier("more-settings-button")
             } label: {
                 Circle()
                     .fill(Color.contextCard)

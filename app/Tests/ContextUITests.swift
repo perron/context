@@ -155,6 +155,53 @@ final class ContextUITests: XCTestCase {
     }
 
     @MainActor
+    func testSettingsExposeWebsiteDataAndFilterAttribution() {
+        let app = XCUIApplication()
+        app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
+        app.launch()
+
+        XCTAssertTrue(app.buttons["More"].waitForExistence(timeout: 5))
+        app.buttons["More"].tap()
+        let settingsButton = app.buttons["more-settings-button"]
+        XCTAssertTrue(settingsButton.waitForExistence(timeout: 5))
+        settingsButton.tap()
+
+        XCTAssertTrue(app.navigationBars["Settings"].waitForExistence(timeout: 5))
+        let clearWebsiteData = app.buttons["clear-website-data-button"]
+        if !clearWebsiteData.exists {
+            app.swipeUp()
+        }
+        XCTAssertTrue(clearWebsiteData.waitForExistence(timeout: 5))
+        app.swipeUp()
+        let attribution = app.descendants(matching: .any)["easylist-attribution-link"]
+        if !attribution.exists {
+            app.swipeUp()
+        }
+        XCTAssertTrue(attribution.waitForExistence(timeout: 5))
+        addScreenshot(named: "Context 1.0 Privacy and Attribution")
+    }
+
+    @MainActor
+    func testExternalURLRequiresConfirmation() {
+        let app = XCUIApplication()
+        app.launchArguments = [
+            "-AppleLanguages", "(en)",
+            "-AppleLocale", "en_US",
+            "--ui-test-external-url"
+        ]
+        app.launch()
+
+        let externalLink = app.links["Email example"]
+        XCTAssertTrue(externalLink.waitForExistence(timeout: 5))
+        externalLink.tap()
+
+        XCTAssertTrue(app.alerts["Open another app?"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["mailto:hello@example.com"].exists)
+        app.alerts["Open another app?"].buttons["Cancel"].tap()
+        XCTAssertEqual(app.state, .runningForeground)
+    }
+
+    @MainActor
     private func addScreenshot(named name: String) {
         let attachment = XCTAttachment(screenshot: XCUIApplication().screenshot())
         attachment.name = name

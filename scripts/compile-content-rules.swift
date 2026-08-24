@@ -87,6 +87,11 @@ private let unsupportedOptions = [
     "urltransform",
 ]
 
+private let supportedOptions = Set(supportedResourceTypes.keys).union([
+    "domain",
+    "third-party",
+])
+
 private func headerValue(_ key: String, lines: [Substring]) -> String {
     let prefix = "! \(key):"
     guard let line = lines.first(where: { $0.hasPrefix(prefix) }) else {
@@ -188,7 +193,9 @@ private func convertLine(_ rawLine: Substring) -> (ContentRule, Bool)? {
 
     guard !options.contains(where: { option in
         let name = option.split(separator: "=", maxSplits: 1).first.map(String.init) ?? option
-        return unsupportedOptions.contains(name.trimmingPrefix("~"))
+        let normalizedName = name.trimmingPrefix("~")
+        return unsupportedOptions.contains(normalizedName)
+            || !supportedOptions.contains(normalizedName)
     }), let urlFilter = convertPattern(rawPattern) else {
         return nil
     }
@@ -302,9 +309,26 @@ private func fingerprint(_ data: Data) -> String {
 }
 
 private let arguments = CommandLine.arguments
+if arguments.count == 2, arguments[1] == "--self-test" {
+    precondition(convertLine("||ads.example^$elemhide") == nil)
+
+    let scriptRule = convertLine("||tracker.example^$script")
+    precondition(scriptRule?.0.action.type == "block")
+    precondition(scriptRule?.0.trigger.resourceType == ["script"])
+
+    let documentException = convertLine("@@||example.com^$document")
+    precondition(documentException?.0.action.type == "ignore-previous-rules")
+    precondition(documentException?.0.trigger.resourceType == ["document"])
+
+    print("Content rule compiler self-test passed.")
+    exit(0)
+}
+
 guard arguments.count == 4 else {
     FileHandle.standardError.write(
-        Data("usage: compile-content-rules.swift EASYLIST EASYPRIVACY OUTPUT_DIR\n".utf8)
+        Data(
+            "usage: compile-content-rules.swift --self-test | EASYLIST EASYPRIVACY OUTPUT_DIR\n".utf8
+        )
     )
     exit(64)
 }

@@ -56,6 +56,7 @@ The Xcode project is generated from `project.yml`; edit that file, then regenera
 - [Privacy policy](https://perron.github.io/context/privacy/)
 - [Support](https://perron.github.io/context/support/)
 - [Security policy](SECURITY.md)
+- [App Store release gates](docs/APP_STORE_RELEASE.md)
 
 ## Open source
 

@@ -114,6 +114,9 @@ public final class BrowserStore: ObservableObject {
                 tab.setContentBlockingEnabled(
                     protectionStore.isBlocking(url: tab.page.url)
                 )
+                if !tab.isNewTab, tab.page.url != nil {
+                    tab.page.reload()
+                }
             }
             contentRuleStatus = .ready(
                 ruleCount: preparedContentRules.manifest.totalRuleCount
@@ -171,7 +174,7 @@ public final class BrowserStore: ObservableObject {
 
     private func handle(_ disposition: BrowserNavigationDisposition) {
         switch disposition {
-        case .allow:
+        case .allow, .cancel:
             break
         case .openContextTab(let url):
             openInNewTab(url)

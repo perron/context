@@ -18,6 +18,9 @@ enum ContextLinks {
     static let support = URL(
         string: "https://perron.github.io/context/support/"
     )!
+    static let easyListLicense = URL(
+        string: "https://easylist.to/pages/licence.html"
+    )!
 
     static func xPostIntent(title: String, url: URL?) -> URL {
         let cleanTitle = title
