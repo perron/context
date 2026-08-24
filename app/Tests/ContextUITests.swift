@@ -27,6 +27,32 @@ final class ContextUITests: XCTestCase {
     }
 
     @MainActor
+    func testAddressEntryNavigatesInsideContext() {
+        let app = XCUIApplication()
+        app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
+        app.launch()
+
+        let addressField = app.textFields["Search or enter website"]
+        XCTAssertTrue(addressField.waitForExistence(timeout: 5))
+        addressField.tap()
+        addressField.typeText("example.com\n")
+
+        XCTAssertTrue(
+            app.webViews.firstMatch.waitForExistence(timeout: 15),
+            "Typing a normal URL must load Context's embedded WebView."
+        )
+        XCTAssertEqual(
+            app.state,
+            .runningForeground,
+            "Typing a normal URL must not hand navigation to Safari."
+        )
+        XCTAssertTrue(
+            String(describing: addressField.value).contains("example.com"),
+            "The address bar should continue to show the page loaded by Context."
+        )
+    }
+
+    @MainActor
     func testAskGrokReviewShowsExplicitDestinations() {
         let app = XCUIApplication()
         app.launchArguments = [
